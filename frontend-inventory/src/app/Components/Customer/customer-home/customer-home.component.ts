@@ -41,7 +41,7 @@ interface productModel {
 
 export class CustomerHomeComponent {
   displayedColumns: string[] = [
-    'saleId',
+    'orderId',
     'qtyTot',
     'totalAmount',
     'soldDate',
@@ -95,7 +95,6 @@ export class CustomerHomeComponent {
   @ViewChild('viewProduct') viewProduct: ElementRef | undefined;
   @ViewChild('sale') sale: ElementRef | undefined;
   @ViewChild('SelectedSalePreview') SelectedSalePreview: ElementRef | undefined;
-
   constructor(private saleService: SaleService, private router: Router, private fb: FormBuilder, private productService: ProductService, private modal: NgbModal, private _Activatedroute: ActivatedRoute) {
     this.getAllProducts();
     this.checkRole();
@@ -357,6 +356,8 @@ export class CustomerHomeComponent {
     this.selectedSale = [];
     this.closePopup();
     this.selectedSale = data
+
+    console.log(data.saleItemsDtos)
     this.modalRef = this.modal.open(this.SelectedSalePreview, {centered: true});
   }
 }

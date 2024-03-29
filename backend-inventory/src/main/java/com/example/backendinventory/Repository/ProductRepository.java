@@ -31,6 +31,9 @@ public interface ProductRepository extends JpaRepository<Products, Long> {
     @Query(value = "SELECT * FROM products WHERE product_id=?1", nativeQuery = true)
     List<Products> getProductById(String productId);
 
+    @Query(value = "SELECT * FROM products WHERE product_id=?1", nativeQuery = true)
+    Optional<Products> getProductByIdOptional(String productId);
+
     @Query(value = "SELECT * FROM products;", nativeQuery = true)
     List<Products> getActiveAndNonActivePoducts();
 

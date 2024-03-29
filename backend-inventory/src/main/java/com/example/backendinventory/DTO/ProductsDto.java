@@ -1,6 +1,9 @@
 package com.example.backendinventory.DTO;
 
+import com.example.backendinventory.Model.SaleItems;
 import org.springframework.data.annotation.Id;
+
+import java.util.List;
 
 public class ProductsDto {
 
@@ -18,6 +21,8 @@ public class ProductsDto {
     private String image3;
     private String description;
     private String productName;
+    private List<SaleItems> saleItems;
+    private List<SaleItemsDto> saleItemsDtos;
 
     public String getDescription() {
         return description;
@@ -35,8 +40,24 @@ public class ProductsDto {
         this.productID = productID;
     }
 
+    public List<SaleItemsDto> getSaleItemsDtos() {
+        return saleItemsDtos;
+    }
+
+    public void setSaleItemsDtos(List<SaleItemsDto> saleItemsDtos) {
+        this.saleItemsDtos = saleItemsDtos;
+    }
+
     public String getCategory() {
         return category;
+    }
+
+    public List<SaleItems> getSaleItems() {
+        return saleItems;
+    }
+
+    public void setSaleItems(List<SaleItems> saleItems) {
+        this.saleItems = saleItems;
     }
 
     public void setCategory(String category) {

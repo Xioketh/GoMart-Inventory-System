@@ -1,11 +1,20 @@
 package com.example.backendinventory.DTO;
 
+import com.example.backendinventory.Model.Products;
+
+import java.util.List;
+import java.util.Optional;
+
 public class SaleItemsDto {
 
     private String saleId;
     private String productId;
     private int totalAmount;
     private int qty;
+    Products product;
+
+    public SaleItemsDto() {
+    }
 
     public SaleItemsDto(String saleId, String productId, int totalAmount, int qty) {
         this.saleId = saleId;
@@ -14,12 +23,21 @@ public class SaleItemsDto {
         this.qty = qty;
     }
 
+
     public String getSaleId() {
         return saleId;
     }
 
     public void setSaleId(String saleId) {
         this.saleId = saleId;
+    }
+
+    public Products getProducts() {
+        return product;
+    }
+
+    public void setProducts(Products products) {
+        this.product = products;
     }
 
     public String getProductId() {

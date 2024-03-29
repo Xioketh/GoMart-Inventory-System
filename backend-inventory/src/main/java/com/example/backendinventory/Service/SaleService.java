@@ -11,6 +11,7 @@ import com.example.backendinventory.Repository.ProductRepository;
 import com.example.backendinventory.Repository.SaleItemRepository;
 import com.example.backendinventory.Repository.SaleRepository;
 import com.example.backendinventory.Repository.UsersRepository;
+import com.example.backendinventory.ServiceImpl.ProductServiceImpl;
 import com.example.backendinventory.Utill.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,9 @@ public class SaleService {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private ProductServiceImpl productService;
 
     public ResponseEntity<?> saveSale(SaleDto saleDto) {
 
@@ -134,6 +138,16 @@ public class SaleService {
         return saleDto;
     }
 
+    public SaleItemsDto convertSaleItemsToSalesItemDTO(SaleItems saleItems){
+        SaleItemsDto saleItemsDto = new SaleItemsDto();
+        saleItemsDto.setQty(saleItems.getQty());
+        saleItemsDto.setSaleId(saleItems.getSaleId());
+        saleItemsDto.setProductId(saleItems.getProductId());
+        saleItemsDto.setTotalAmount(saleItems.getTotalAmount());
+
+        return saleItemsDto;
+    }
+
     public ResponseEntity<?> getCustomerSales(SaleDto saleDto) {
         try {
             String userId = saleDto.getUserId();
@@ -143,14 +157,24 @@ public class SaleService {
                     .map(this::convertSalesToSalesDTO)
                     .collect(Collectors.toList());
 
+
             for (SaleDto dto : saleDtos) {
+
                 List<SaleItems> saleItems = saleItemRepository.getSaleItems(dto.getSaleId());
-                List<Products> products = new ArrayList<>();
-                for (SaleItems saleItem : saleItems) {
-                    List<Products> product = productRepository.getProductById(saleItem.getProductId());
-                    products.addAll(product);
+
+                List<SaleItemsDto> saleItemsDtoList = saleItems.stream()
+                        .map(this::convertSaleItemsToSalesItemDTO)
+                        .collect(Collectors.toList());
+
+                List<SaleItemsDto> saleItemsWithProducts = new ArrayList<>();
+
+                for (SaleItemsDto saleItemsDto : saleItemsDtoList) {
+                    Optional<Products> product = productRepository.getProductByIdOptional(saleItemsDto.getProductId());
+                    saleItemsDto.setProducts(product.get());
+                    saleItemsWithProducts.add(saleItemsDto);
                 }
-                dto.setProducts(products);
+
+                dto.setSaleItemsDtos(saleItemsWithProducts);
             }
 
             return ResponseEntity.ok(saleDtos);
@@ -158,6 +182,7 @@ public class SaleService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
         }
     }
+
 
     public ResponseEntity<?> getSelectedSale(SaleItemsDto saleItemsDto) {
         try {

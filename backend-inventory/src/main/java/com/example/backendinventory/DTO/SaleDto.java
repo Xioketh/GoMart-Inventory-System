@@ -21,6 +21,7 @@ public class SaleDto {
     private List<Products> products;
     private Optional<Products> productData;
     private List<SaleItems> saleItems;
+    private List<SaleItemsDto> saleItemsDtos;
     private Optional<Users> users;
 
     public Optional<Products> getProductData() {
@@ -35,6 +36,15 @@ public class SaleDto {
         this.qtyTot = qtyTot;
         this.saleItems = saleItems;
         this.productData = productData;
+    }
+
+
+    public List<SaleItemsDto> getSaleItemsDtos() {
+        return saleItemsDtos;
+    }
+
+    public void setSaleItemsDtos(List<SaleItemsDto> saleItemsDtos) {
+        this.saleItemsDtos = saleItemsDtos;
     }
 
     public SaleDto() {
