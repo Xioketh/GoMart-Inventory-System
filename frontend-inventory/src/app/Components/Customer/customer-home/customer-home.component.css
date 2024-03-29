@@ -303,3 +303,8 @@ a:hover {
     width: 100%;
   }
 }
+
+table .thead-light tr{
+  font-size: 15px;
+  font-weight: 700;
+}
