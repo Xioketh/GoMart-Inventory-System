@@ -1,0 +1,63 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* This ensures the wrapper takes the full height of the viewport */
+}
+
+.topic {
+  text-align: center;
+  color: #fc9731;
+  font-weight: 700;
+  font-size: 70px;
+  letter-spacing: 15px;
+}
+
+.sub-topic{
+  text-align: center;
+  color: #000000;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: "Agency FB";
+  font-size: 20px;
+}
+
+@media (max-width: 767px) {
+  .image-right {
+    display: none;
+  }
+
+  .height-self-center {
+    height: auto !important;
+  }
+
+  .auth-content {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .col-lg-7 {
+    width: 100%;
+  }
+
+  .content-right {
+    margin-top: 20px; /* Adjust spacing between content and image */
+  }
+
+  .image-right {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+button{
+  background: #fc9731;
+}
+
+span{
+  color: red;
+}
+
+button:hover{
+  background: #026af1;
+}

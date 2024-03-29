@@ -1,0 +1,49 @@
+<!-- header -->
+<div [class.sticky]="isSticky">
+  <div class="top-header-area" id="sticker">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-sm-12 text-center">
+          <div class="main-menu-wrap">
+            <!-- logo -->
+            <div class="site-logo" *ngIf="isSticky">
+              <img src="assets/img/logo1.png" alt="">
+            </div>
+            <!-- logo -->
+
+            <!-- menu start -->
+
+
+            <nav class="main-menu">
+              <ul>
+                <!-- <li><a href="#">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li> -->
+                <li>
+                  <div class="header-icons">
+                    <button mat-button class="menu-button" *ngIf="showMyOrders" (click)="salesView()"
+                            style="color: #F28123;">
+                      <mat-icon matBadge="{{sales.length}}" matBadgeSize="small" matBadgeColor="primary"><i
+                        class="fa-solid fa-box"></i></mat-icon>
+                    </button>
+                    <button mat-button class="menu-button" (click)="cartView()" style="color: #4380a3;">
+                      <mat-icon matBadge="{{cartProdcuts.length}}" matBadgeSize="small" matBadgeColor="warn"><i
+                        class="fa fa-cart-plus" aria-hidden="true"></i></mat-icon>
+                    </button>
+                    <button mat-button class="menu-button" (click)="onLog()" style="color: #4380a3;">
+                      <mat-icon matBadge="" matBadgeSize="small" matBadgeColor="warn"><i class="fa fa-user"></i>
+                      </mat-icon>
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </nav>
+            <!-- menu end -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- end header -->
