@@ -1,10 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { throwError } from 'rxjs';
-import { AuthService } from 'src/app/Services/AuthService';
-import { usersService } from 'src/app/Services/users.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {throwError} from 'rxjs';
+import {AuthService} from 'src/app/Services/AuthService';
+import {usersService} from 'src/app/Services/users.service';
 import Swal from 'sweetalert2';
 
 
@@ -15,19 +15,19 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
 
-  user: any={
-    userName:'',
-    userPassword:'',
+  user: any = {
+    userName: '',
+    userPassword: '',
   }
 
-  cartProducts:any;
+  cartProducts: any;
   isCartProductsPresent: boolean = false;
 
-  constructor(private fb: FormBuilder, private _userService: usersService,private authService: AuthService, private router:Router, private _Activatedroute: ActivatedRoute){
+  constructor(private fb: FormBuilder, private _userService: usersService, private authService: AuthService, private router: Router, private _Activatedroute: ActivatedRoute) {
     const rawData = this._Activatedroute.snapshot.queryParamMap.get('my_object');
 
     if (rawData) {
-      this.isCartProductsPresent =  true;
+      this.isCartProductsPresent = true;
       try {
         this.cartProducts = JSON.parse(rawData);
         console.log('Parsed Data:', this.cartProducts);
@@ -42,12 +42,14 @@ export class LoginComponent implements OnInit {
     localStorage.clear();
   }
 
-  onSubmit(){
-
-    // this.user.userName='user';
-    // this.user.userPassword='user';
-
-    console.log(this.user);
+  onSubmit() {
+    if (!this.user.userName) {
+      Swal.fire('', 'Please Fill Username', 'warning');
+      return;
+    } else if (!this.user.userPassword) {
+      Swal.fire('', 'Please Fill Password', 'warning');
+      return;
+    }
 
 
     this._userService.login(this.user).subscribe(
@@ -58,10 +60,10 @@ export class LoginComponent implements OnInit {
         if (role === 'Admin') {
           this.router.navigateByUrl('/admin/dashboard');
         } else {
-          if (this.isCartProductsPresent){
+          if (this.isCartProductsPresent) {
             this.router.navigate(['/home']);
-          }else{
-            this.router.navigate(['/home'], { queryParams: { my_object: JSON.stringify(this.cartProducts) } });
+          } else {
+            this.router.navigate(['/home'], {queryParams: {my_object: JSON.stringify(this.cartProducts)}});
           }
         }
       },
@@ -71,7 +73,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  saveToSession(data: any){
+  saveToSession(data: any) {
     localStorage.setItem('roles', JSON.stringify(data.user.role));
     localStorage.setItem('jwtToken', data.jwtToken);
     localStorage.setItem('userName', data.user.userName);
@@ -81,7 +83,6 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('role', data.user.role[0].roleName);
     localStorage.setItem('userID', data.user.userId);
   }
-
 
 
 }
